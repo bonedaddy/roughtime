@@ -29,8 +29,9 @@ import (
 	"net"
 	"time"
 
+	"github.com/cloudflare/roughtime/mjd"
+	"github.com/cloudflare/roughtime/protocol"
 	"roughtime.googlesource.com/roughtime.git/go/config"
-	"roughtime.googlesource.com/roughtime.git/go/protocol"
 )
 
 const (
@@ -157,7 +158,7 @@ func (rt *Roughtime) Now() (time.Time, time.Duration) {
 // getMidpoint converts a timestamp sent from the server to a Go-friendly
 // timestamp.
 func getMidpoint(midpoint uint64) time.Time {
-	return time.Unix(0, int64(midpoint)*1000)
+	return mjd.RoughtimeVal(midpoint).Unix()
 }
 
 // getRadius converts the server radius to a Go-friendly duration.
